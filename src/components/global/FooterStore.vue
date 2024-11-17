@@ -68,7 +68,7 @@ The design is simple
         <div class="subscriber_mid">
 
         <div class="first_para">
-            <div class="footer_logo"><h1>gndra</h1></div>
+            <div class="footer_logo"><h1>simba</h1></div>
                     <div class="footer_para">
                         <h3 id="footer_first_head">Start Your Jounery Now</h3>
                         <br>
@@ -163,7 +163,7 @@ The design is simple
 
 
 
-        <div class="footer_logo_last"><h1>gndra</h1></div>
+        <div class="footer_logo_last"><h1>simba</h1></div>
         <div class = "vertical3"></div>
         <div class = "footer_last_mid_para"><p id="unleash">Unleash The Power Of Security And Development</p></div>
         <div class = "footer_last_last_para">
@@ -275,6 +275,8 @@ letter-spacing: 4px;
 grid-area: subscribe;
 font-family: sans-serif;
 background: #2cb95b;
+background-color: rgb(127, 6, 6);
+
 cursor: pointer;
 margin-top: auto;
 margin-bottom: auto;
@@ -440,7 +442,8 @@ color: white;
 letter-spacing: 1px;
 grid-area: subscribe;
 font-family: sans-serif;
-background: #2cb95b;
+// background: #2cb95b;
+background-color: rgb(127, 6, 6);
 cursor: pointer;
 margin-top: auto;
 margin-bottom: auto;

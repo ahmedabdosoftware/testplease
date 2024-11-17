@@ -1,14 +1,15 @@
 <template>
     <div class="contPro">
       <!-- <router-link :to="{ name: 'ProductDetails', params: { id: oneProduct.id } }"> -->
+      <div>
         <div>
-          <div>
             <router-link :to="{ name: 'ProductDetails', params: { id: oneProduct.id } }">
-              <img :src="oneProduct.images[0]" />
+              <img :src="oneProduct.imageUrl[0]" />
             </router-link>
         </div>
         <div>
-          <span> {{ oneProduct.title }}</span>
+          <span class="title"> {{ oneProduct.name }}</span>
+          <!-- <p class="descrption">{{ oneProduct.description.substring(0, 22)}}</p> -->
           <p class="descrption">{{ oneProduct.description.substring(0, 22)}}</p>
           <div class="cont-star">
             <img
@@ -32,7 +33,7 @@
               src="https://img.freepik.com/free-vector/start_53876-25533.jpg"
             />
           </div>
-          <span> $ {{ oneProduct.price }}</span>
+          <span> $ {{ oneProduct.priceMaterial }}</span>
           <img
               class="shoppingCart"
               src="https://images.all-free-download.com/images/graphiclarge/green_shopping_cart_icon_vector_280755.jpg"
@@ -53,6 +54,10 @@
     methods: {
 
     },
+    async created() {
+
+}
+
   };
   </script>
   <style scoped>
@@ -66,6 +71,7 @@
   .contPro {
     width: 100%;
     height: 100%;
+    /* background-color: red; */
   }
   /* cont one product */
   .contPro > div {
@@ -76,7 +82,6 @@
     border-radius: 5px;
     cursor: pointer;
     display: flex;
-    /* background-color: red; */
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
@@ -86,8 +91,7 @@
   .contPro > div > div:first-child {
     width: 90%;
     height: 59%;
-    background-color: rgb(194, 191, 191);
-    /* background-color:rgb(141, 28, 28); */
+    background: linear-gradient(135deg, #f5f5f5, #ddd); /* خلفية هادئة */
     border-radius: 15px;
     position: relative;
   }
@@ -134,9 +138,14 @@
   .contPro > div > div:nth-child(2) span:nth-of-type(2) {
     padding-left: 15px;
   }
-  .descrption {
-    font-size: 14px;
-  }
+  .descrption,.title {
+  font-size: 14px;
+  display: block;
+  /* width: 100%; */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
   .dark-mode {
     background-color: black !important;
     box-shadow: 0 0 5px rgb(34, 34, 34) !important;
@@ -148,5 +157,12 @@
     right: 10px;
     bottom: 14px;
   }
+@media (max-width: 460px) {
+  .descrption,.title {
+    font-size: 12px; /* حجم الخط أصغر قليلاً للشاشات الصغيرة */
+    max-width: 100%; /* تعيين عرض الوصف ليتناسب مع الحاوية */
+  }
+  
+}
   </style>
   

@@ -76,7 +76,7 @@
           <button >sign up</button>
         </div>
         <div  class="cont-imge-lift">
-          <img src="../assets/undraw_maker_launch_re_rq81.svg">
+          <img src="../../assets/undraw_maker_launch_re_rq81.svg">
         </div>
       </div>
       <div class="panel panel-right">
@@ -87,7 +87,7 @@
           <button  >sign in</button>
         </div>
         <div class="cont-imge-right">
-          <img src="../assets/undraw_winter_designer_a-2-m7.svg">
+          <img src="../../assets/undraw_winter_designer_a-2-m7.svg">
         </div>
       </div>
     </div>

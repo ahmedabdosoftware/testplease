@@ -1,32 +1,45 @@
 import { createRouter, createWebHistory } from 'vue-router'
+
+// main layout pages
+import MainPages from '@/shared/layouts/MainPages.vue'
 import ProductDetails from '../views/products/ProductDetails'
-import SingUPAndSingIn from '../views/SingUPAndSingIn'
+import ProductOfCategory from '../views/ProductOfCategory/ProductOfCategory'
+import CartPage from '../views/cartPage/CartPage'
+
+// singn page
+import SingUPAndSingIn from '../views/sign/SingUPAndSingIn.vue'
 
 const routes = [
-  
-  {
-    path: '/',
-    name: 'shop',
-    // route level code-splitting
-    // this generates a separate chunk (shop.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "shop" */ '../views/Shop.vue')
-  },
-  {
-    path: '/product/:id',
-    name: 'ProductDetails',
-    // route level code-splitting
-    // this generates a separate chunk (shop.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: ProductDetails,
-  },
   {
     path: '/SingUPAndSingIn',
     name: 'SingUPAndSingIn',
-    // route level code-splitting
-    // this generates a separate chunk (shop.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: SingUPAndSingIn,
+  },
+  {
+    path: '/',
+    component: MainPages,
+    children: [
+      {
+        path: '',
+        name: 'shop',
+        component: () => import(/* webpackChunkName: "shop" */ '../views/Shop.vue')
+      },
+      {
+        path: '/product/:id',
+        name: 'ProductDetails',
+        component: ProductDetails,
+      },
+      {
+        path: '/ProductOfCategory/:id',
+        name: 'ProductOfCategory',
+        component: ProductOfCategory,
+      },
+      {
+        path: '/CartPage',
+        name: 'CartPage',
+        component: CartPage,
+      },
+    ],
   },
 ]
 

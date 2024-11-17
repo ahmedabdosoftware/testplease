@@ -1,7 +1,8 @@
 <template>
     <header>
       <div class="logo-cont">
-        <span class="logo">gndra</span>
+        <img class="logo-img"  :src="require('@/assets/simbaLogo.png')" >
+        <span class="logo">simba</span>
       </div>
       <ul id="nav">
         <li>
@@ -20,12 +21,15 @@
       </ul>
       <div>
         <div class="contIcon">
-            <font-awesome-icon class="icon" :icon="['fas', 'cart-shopping']" />
-            <span>4</span>
+            <router-link :to="{ name: 'CartPage'}">
+                <font-awesome-icon class="icon" :icon="['fas', 'cart-shopping']" />
+            </router-link>
+            <span>{{ cartItems.length }}</span>
+            
         </div>
         <div  class="contIcon">
             <font-awesome-icon class="icon" :icon="['fas', 'bell']" />
-            <span>2</span>
+            <span>0</span>
         </div>
         <div  class="contIcon account">
           <font-awesome-icon v-on:click="appearAccountMenue()" class="icon accountIcon" :icon="['fas', 'user']" />
@@ -62,27 +66,46 @@
     </header>
   </template>
   <script>
+
+  // state
+  import {  mapState } from 'pinia'
+  // store
+  import { useCartStore } from '@/store/cart/cart.js';
   export default {
     name: "Header",
     computed: {
       isLogin () {
         // console.log( this.$store.getters.isLogin)
         return this.$store.getters.isLogin
-      }
+      },
+      ...mapState(useCartStore, ['cartItems']),
+
     },
     methods: {
-        appearMenue() {
-          document.getElementById("nav").style.cssText = "right:0%;";
-          },
-       disappear() {
-          document.getElementById("nav").style.cssText = "right:-100%;";
-       },
-       appearAccountMenue() {
-          document.getElementById("accountMenue").style.cssText = "visibility:visible;";
-          },
-       disappearAccountMenue() {
-          document.getElementById("accountMenue").style.cssText = "visibility:hidden;";
-       },
+      appearMenue() {
+        const nav = document.getElementById("nav");
+        if (nav) {
+          nav.style.cssText = "right:0%;";
+        }
+      },
+      disappear() {
+        const nav = document.getElementById("nav");
+        if (nav) {
+          nav.style.cssText = "right:-100%;";
+        }
+      },
+      appearAccountMenue() {
+        const accountMenue = document.getElementById("accountMenue");
+        if (accountMenue) {
+          accountMenue.style.cssText = "visibility:visible;";
+        }
+      },
+      disappearAccountMenue() {
+        const accountMenue = document.getElementById("accountMenue");
+        if (accountMenue) {
+          accountMenue.style.cssText = "visibility:hidden;";
+        }
+      },
        logOut() {
         this.$store.commit('logOut')
        },
@@ -111,19 +134,27 @@
     // background-color:red;
   }
   .logo-cont {
-    width: 150px;
+    width: 250px;
     height: 40px;
     // background-color:red;
     margin-left: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     //   scss code
     >span {
       text-align: center;
       line-height: 40px;
       color: black;
       font-weight: bold;
-      font-size: 40px;
-    //   text-transform: uppercase;
-      font-family: "Dancing Script", cursive;
+      font-size: 30px;
+      font-family: "Oswald", sans-serif;
+      font-optical-sizing: auto;
+    }
+    .logo-img{
+      width: 70px;
+      height: 70px;
+      margin-right: 10px;
     }
   }
   header > div:nth-child(3) {
@@ -139,27 +170,28 @@
       display: flex;
       justify-content: space-evenly;
       align-items: center;
-    width: 40px;
-    height: 100%;
-    background-color: rgb(224, 224, 226);
-    position: relative;
-    border-radius: 4px;
+      width: 40px;
+      height: 100%;
+      // background-color: rgb(224, 224, 226);
+      position: relative;
+      border-radius: 4px;
     >span{
-      background-color:red;
+      background-color:rgb(127, 6, 6);
       position: absolute;
       bottom: 20px;
-    left: 2px;
-    height: 15px;
-    width: 15px;
-    border-radius: 7.5px;
-    color: var(--popularCalar);
-    // background-color:red;
-    font-size: 14px;
+      left: 2px;
+      height: 15px;
+      width: 15px;
+      border-radius: 7.5px;
+      color: var(--popularCalar);
+      // background-color:red;
+      font-size: 14px;
     
   }
 }
 >div:hover{
-  background-color: rgb(22, 175, 22);
+  // background-color: rgb(22, 175, 22);
+  // background-color:red;
   cursor: pointer;
 }
   
@@ -178,6 +210,7 @@ position: relative;
   position:absolute ;
   top: 60px;
   right: -13px;
+  // z-index: 10000;
   background-color:  rgb(248, 243, 243);
   background-color: white;
   border-radius: 5px;
@@ -240,6 +273,7 @@ position: relative;
 
   .router-link-exact-active:not(.accountMenueLink) {
     color:var(--active);
+    color:rgb(127, 6, 6);
     position: relative;
   }
   .router-link-exact-active:not(.accountMenueLink)::after{
@@ -248,6 +282,7 @@ position: relative;
     bottom: -5px;
     left: 5px;
     background-color: var(--active);
+    background-color: rgb(127, 6, 6);
     width: 28px;
     height: 3px;
     border: 2px;
@@ -307,24 +342,29 @@ position: relative;
   
   
   header {
-      display: flex;
-      justify-content: space-evenly;
-    }
-  
-    .logo-cont {
-      // background-color:red;
-      margin-left:0px;
-      //   scss code
-     
-    }
-    header > div:nth-child(3) {
-      // background-color:rgb(0, 255, 85);
-      margin-right: 0px;
-      width: 200px;
-     
+    display: flex;
+    justify-content: space-evenly;
   }
-
+  
+  .logo-cont {
+    // background-color:red;
+    margin-left:0px;
+    //   scss code
+    
+  }
+  header > div:nth-child(3) {
+    // background-color:rgb(0, 255, 85);
+    margin-right: 0px;
+    width: 200px;
+    
+  }
+  
 }
 
+@media(max-width:460px){
+  header{
+    z-index: 200;
+  }
+}
   </style>
   

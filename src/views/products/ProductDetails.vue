@@ -1,40 +1,38 @@
 <template>
-  <div>
+  <div v-if="product" class="contner content">
     <section>
       <div>
-        <div class="mainPicture">
-          <img :src="product.images[0]" class="fullPicture" /> 
+       <!-- الصورة الرئيسية -->
+       <div class="mainPicture">
+          <img :src="mainImage" class="fullPicture" /> 
         </div>
+
+        <!-- الصور الصغيرة -->
         <div>
-          <div>
-            <img :src="product.images[0]" class="smallPicture" /> 
-          </div>
-          <div>
-            <img :src="product.images[1]" class="smallPicture" /> 
-          </div>
-          <div>
-            <img :src="product.images[2]" class="smallPicture" /> 
+          <div v-for="(image, index) in product.imageUrl" :key="index">
+            <img 
+              :src="image" 
+              class="smallPicture" 
+              @click="mainImage = image" 
+            />           
           </div>
         </div>
       </div>
+
       <div>
-        <span>home/ {{ product.category.name }}</span>
-        <p>{{ product.title }}
+        <span>home/ {{ categoryName(product) }}</span>
+        <p>{{ product.name }}
         </p>
-        <span>${{ product.price }}</span>
+        <span>${{ product.priceMaterial }}</span>
         <select >
           <option>select size</option>
           <option>small</option>
           <option>mediam</option>
           <option>large</option>
         </select>
-        <div> 
-          <select>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-          </select>
-          <button>add to cart</button>
+        <div class="number"> 
+          <input type="number" v-model="quantity">
+          <button class="add-to-cart" @click="addToCartHandler">add to cart</button>
         </div>
         <h2>product details</h2>
         <p> {{ product.description }}!</p>
@@ -47,81 +45,125 @@
       <div>
          <!-- {{productsRelatedAfterCut[0].price  }} -->
         <div >
-          <div v-for="s in productsRelatedAfterCut " :key="s.id">
+          <div class="cont-product" v-for="s in productsRelatedAfterCut " :key="s.id">
             <BoxProduct
               :oneProduct="s"
-            ></BoxProduct>
+              ></BoxProduct>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-  </div>  
+      </section>
+    </div> 
+    <div v-else class="contner loading">
+      <CircleLoader
+        :show="isLoading"
+      >
+    </CircleLoader>
+  </div>
+
 </template>
   
 <script>
-import BoxProduct from "@/components/BoxProduct.vue";
+
+// components
+  import BoxProduct from "@/components/products/BoxProduct.vue";
+  import CircleLoader from "@/shared/components/loading/CircleLoader.vue";
+
+  // actions 
+  import {  mapState , mapActions } from 'pinia'
+
+  //store
+  import { useProductsStore } from '@/store/products/products.js'
+  import { useCategoriesStore } from '@/store/categories/categories.js';
+  import { useCartStore } from '@/store/cart/cart.js';
+  
+  // mixins 
+  import categoryName from '@/mixins/categoryName';
 
   export default {
-    name: "BoxCategory",
+    name: "ProductDetails",
+    mixins: [categoryName],
     components: {
     BoxProduct,
-    // ReviewCostomer
+    CircleLoader,
   },
     data() {
     return {
       id:'',
+      isLoading:false,
       product:'',
+      quantity:1,
       productsRelated:[],
+      mainImage: "", // الصورة الرئيسية
+
     };
   },
      computed: {
-      products () {
-      return this.$store.state.products
-    },
-    productsRelatedAfterCut () {
-    
-      return this.productsRelated.slice(0,Math.min(this.productsRelated.length,4))
-    },
-    
-     
-    },
-    beforeMount(){
-    this.id = this.$route.params.id
-    this.product = this.products.find(product => product.id == this.id)
-    this.productsRelated =this.products.filter(product =>{
-     return product.category.id == this.product.category.id
-    }
-      )
-      
-    console.log("this all products")
-    console.log(this.products)
-    console.log("this id this product")
-    console.log(this.id)
-    console.log(" this is the right now product")
-    console.log(this.product)
-    console.log(" this is category id for the right now product")
-    console.log(this.product.category.id)
-    // console.log(this.product.images[0])
-    console.log("this Related products")
-    console.log(this.productsRelated)
-    console.log("length Related product")
-    console.log(this.productsRelated.length)
-    console.log("after cut the product")
-    console.log(this.productsRelated.slice(0, 4))
-    console.log("one product after cut the product")
-    console.log(this.productsRelated[0])
-    console.log("id for one product after cut the product")
-    console.log(this.productsRelated[2].id)
-    
-  },
-  mounted() {
-    // for (let i = 0; i < Math.min(this.productsRelatedAfterCut.length, 4); i++) {
-    //   const productPassed = this.productsRelatedAfterCut[i];
-    //     this.$refs[`boxProduct${i}`].oneProduct = productPassed;
-     
-    // }
-  },
+      ...mapState(useProductsStore, ['products']),
+      ...mapState(useCategoriesStore, ['categories']),
+
   
+      productsRelatedAfterCut () {
+      
+        return this.productsRelated.slice(0,Math.min(this.productsRelated.length,4))
+      },
+          
+    },
+    methods:{
+  
+  // ============ my actions => start=======================================
+
+  ...mapActions(useProductsStore, ['fetchProducts']),
+  ...mapActions(useCategoriesStore, ['fetchCategories']),
+  ...mapActions(useCartStore, ['addToCart']),
+
+  // ============ my actions => end==========================================
+  
+  // ============ load details product  => start ==========================================
+    loadProductDetails() {
+      // تحميل المنتج الحالي
+      this.product = this.products.find((product) => product.id == this.id);
+      if (this.product) {
+        
+        this.mainImage = this.product.imageUrl[0]; // تعيين الصورة الرئيسية
+        // تحميل المنتجات ذات الصلة
+        this.productsRelated = this.products.filter(
+            (product) => product.categoryId == this.product.categoryId && product.id != this.product.id
+          );
+        }
+      },
+    // ============ load details product  => end ==========================================
+    
+    // ============ add to cart  => start ==========================================
+    addToCartHandler() {
+      this.addToCart(this.product, this.quantity); // إضافة المنتج للسلة
+      alert("Product added to cart!");
+    },
+    // ============ add to cart  => end ==========================================
+  
+
+
+    },
+    async created() {
+      this.isLoading = true;
+      await this.fetchProducts();
+      await this.fetchCategories();
+      this.id = this.$route.params.id;
+      this.loadProductDetails();
+      this.isLoading = false;
+
+  },
+
+    watch: {
+    "$route.params.id": {
+      immediate: true, // تشغيل عند الإنشاء أيضًا
+      handler(newId) {
+        this.id = newId; // تحديث `id`
+        this.loadProductDetails(); // إعادة تحميل المنتج والمنتجات ذات الصلة
+      },
+    },
+  },
+
   };
 </script>
 
@@ -135,7 +177,7 @@ div{
   justify-content: center;
 }
 div >section:first-child{
-  width: 70%;
+  width: 100%;
   height: 750px;
   // background-color: red;
   display: flex;
@@ -143,9 +185,9 @@ div >section:first-child{
   >div{
     width: 50%;
     height: 100%;
-    // background-color: aqua; 
   }
   >div:first-child{
+    // background-color: aqua; 
     display: flex;
     flex-wrap: wrap;
     >div:first-child{
@@ -164,7 +206,8 @@ div >section:first-child{
      align-items: flex-end;
      width: 100%;
      height: 23%;
-     // background-color: forestgreen;
+     padding-left: 35px;
+    //  background-color: forestgreen;
      div{
       display: flex;
       flex-wrap: wrap;
@@ -172,7 +215,7 @@ div >section:first-child{
       align-items: center;
       width: 30%;
       height: 90%;
-      background-color: rgb(119, 114, 114);
+      background: linear-gradient(135deg, #f5f5f5, #ddd); /* خلفية هادئة */
       .smallPicture{
           width: 100%;
           height: 100%;
@@ -237,6 +280,8 @@ div >section:first-child{
         height: 43px;
         border-radius: 20px;
         background-color: orangered;
+        background-color: rgb(127, 6, 6);
+
         font-size: 19px;
         color: white;
       }
@@ -244,8 +289,16 @@ div >section:first-child{
   }
 }
 
+.smallPicture{
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.3s;
 
-
+}
+.smallPicture:hover {
+  transform: scale(1.1);
+}
 div > section:nth-child(2){
   width: 70%;
   height: 600px;
@@ -288,6 +341,57 @@ div > section:nth-child(2){
 
 
   }
+}
+.number{
+  display: flex;
+  justify-content: space-evenly;
+  // background-color: red;
+  input{
+    width: 40px;
+    height: 40px;
+    padding-left: 10px;
+    border: 1px solid rgb(122, 122, 122);
+    border-radius: 4px;
+  }
+}
+.add-to-cart{
+  cursor: pointer;
+}
+@media(max-width:460px){
+
+  .contner{
+  height:2300px;
+ 
+}
+
+  div >section:first-child{
+    width: 100%;
+   >div:first-child{
+    width: 100%;
+    >div:first-child{
+      width: 100%;
+    }
+    >div:nth-child(2){
+     width: 100%; 
+   }
+  }
+  >div:nth-child(2){
+    width: 100%;        
+}
+}
+
+div > section:nth-child(2){
+  width: 85%;
+  margin-top: 700px;
+  margin-bottom: 200px;
+  >div:nth-child(2){
+    width: 100%;
+  }
+}
+.cont-product{
+  width: 50% !important;
+  height: 260px !important;
+}
 }
 </style>
   
