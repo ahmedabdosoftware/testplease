@@ -162,6 +162,13 @@
     font-size: 12px; /* حجم الخط أصغر قليلاً للشاشات الصغيرة */
     max-width: 100%; /* تعيين عرض الوصف ليتناسب مع الحاوية */
   }
+  /*img => flower */
+  .contPro > div > div:first-child img {
+    width: 80%;
+    height: 80%;
+    border-radius: 15px;
+    margin-top: 20px;
+  }
   
 }
   </style>

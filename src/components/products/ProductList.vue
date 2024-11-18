@@ -257,9 +257,16 @@ data(){
 }
  
  }
+ @media(max-width:500px){
+   .allContentProduct >div{ 
+      width: 50% !important;
+      height: 300px !important;
+  }
+  }
  @media(max-width:460px){
    .allContentProduct >div{ 
       width: 50% !important;
+      height: 300px;
   }
 
   .title-name{

@@ -1,6 +1,6 @@
 <template>
     <!--==================== CATEGORY LIST ====================-->  
-    <section class="catogery">
+    <section id="Category" class="catogery">
       <div class="titleCatogery">
           <h1>our <span>catogery</span> </h1>
       </div>

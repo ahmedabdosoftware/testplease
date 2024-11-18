@@ -7,15 +7,19 @@
       </div>
       <div class="summary-item summary-item--label">
         <p>SHIPPING</p>
-        <select class="summary-select" v-model="selectedShipping">
-        <option value="55">Cairo, Giza - 55 pound</option>
-        <option value="60">Around Giza - 60 pound</option>
-        <option value="60">New cities like Madinaty - 60 pound</option>
-        <option value="70">Delta cities like Tanta, Alex - 70 pound</option>
-        <option value="70">Al Qanah cities like Suez - 70 pound</option>
-        <option value="85">Southern Egypt like Aswan, Luxor - 85 pound</option>
-        <option value="100">Cities like Hurghada - 100 pound</option>
-        <option value="125">South Sinai - 125 pound</option>
+        <select 
+          class="summary-select"
+          v-model="selectedShipping"
+          @change="updateShipping"
+         >
+          <option value="55">Cairo, Giza - 55 pound</option>
+          <option value="60">Around Giza - 60 pound</option>
+          <option value="60">New cities like Madinaty - 60 pound</option>
+          <option value="70">Delta cities like Tanta, Alex - 70 pound</option>
+          <option value="70">Al Qanah cities like Suez - 70 pound</option>
+          <option value="85">Southern Egypt like Aswan, Luxor - 85 pound</option>
+          <option value="100">Cities like Hurghada - 100 pound</option>
+          <option value="125">South Sinai - 125 pound</option>
       </select>
       </div>
       <div class="summary-item summary-item--label">
@@ -29,14 +33,15 @@
         <span>TOTAL PRICE</span>
         <span>{{ totalPriceWithShipping }}</span>
       </div>
-      <button class="checkout-button">CHECKOUT</button>
+      <router-link :to="{ name: 'CheckOut'}">      
+        <button class="checkout-button">CHECKOUT</button>
+      </router-link>
     </div>
   </template>
-  
   <script>
 
-   // state
-   import {  mapState } from 'pinia'
+   // state , Actions
+   import { mapState, mapActions } from "pinia";
    // store
    import { useCartStore } from '@/store/cart/cart.js';
    export default {
@@ -63,9 +68,15 @@
     },
   },
     methods: {
+      ...mapActions(useCartStore, ["updateShippingCost"]),
+
       removeData(){
         this.code = ""
-      }
+      },
+      updateShipping() {
+      this.updateShippingCost(Number(this.selectedShipping));
+      },
+  
 
     }
 

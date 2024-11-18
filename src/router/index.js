@@ -5,6 +5,7 @@ import MainPages from '@/shared/layouts/MainPages.vue'
 import ProductDetails from '../views/products/ProductDetails'
 import ProductOfCategory from '../views/ProductOfCategory/ProductOfCategory'
 import CartPage from '../views/cartPage/CartPage'
+import CheckOut from '../views/checkout/CheckOut'
 
 // singn page
 import SingUPAndSingIn from '../views/sign/SingUPAndSingIn.vue'
@@ -38,6 +39,11 @@ const routes = [
         path: '/CartPage',
         name: 'CartPage',
         component: CartPage,
+      },
+      {
+        path: '/CheckOut',
+        name: 'CheckOut',
+        component: CheckOut,
       },
     ],
   },

@@ -9,7 +9,7 @@
                 In here we will help you to shape and build your ideal
                 body and live your life to the fullest.
             </p>
-            <a href="#" class="button button__flex">
+            <a href="#Toproducts" class="button button__flex">
               Shop Now <font-awesome-icon :icon="['fas', 'arrow-right']" />
             </a>
         </div>
@@ -233,7 +233,7 @@ export default {
 
     }
     .button:hover{
-      background-color:hsl(79, 67%, 52%);
+      background-color: red;
     }
   
     .button i{
@@ -303,7 +303,25 @@ export default {
   }
   }
 
+  @media(max-width:415px){
+   
+  .home__img{
+    margin-bottom: 105px;
+    width: 60%;
 
+  }
+  
+  }
+
+
+  @media(max-width:395px){
+   
+  .home__img{
+    margin-bottom: 160px;
+    width: 60%;
+  }
+ 
+  }
   @media(max-width:380px){
     .home__triangle{
       height: 40%;
@@ -311,6 +329,25 @@ export default {
   }
   .home__img{
     margin-bottom: 260px;
+    width: 60%;
+  }
+ 
+  }
+  @media(max-width:377px){
+    .home__triangle{
+      height: 40%;
+      // background-color: red;
+  }
+  .home__img{
+    margin-bottom: 360px !important;
+    width: 50%;
+    // height: 100px !important;
+  }
+  .home__data{
+    // height:500px;
+    padding-left: 20px;
+    // background-color: rgb(69, 69, 94);    
+
   }
  
   }

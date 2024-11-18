@@ -1,5 +1,7 @@
 <template>
     <div class="page">
+        <!-- Progress Steps -->
+        <ProgressSteps :step="1" />
         <div class="cont-products">
             <div class="title">
                 <h2>shipping cart</h2>
@@ -25,6 +27,7 @@
 
     import CartBox from "@/components/cart/CartBox.vue";
     import summaryBox from "@/components/cart/summaryBox.vue";
+    import ProgressSteps from "@/components/cart/ProgressSteps.vue"; // استدعاء المكون
 
     // state
     import {  mapState } from 'pinia'
@@ -35,7 +38,8 @@
     name: "CartPage",
     components: {
     CartBox,
-    summaryBox
+    summaryBox,
+    ProgressSteps
   
   },
   computed: {
@@ -62,6 +66,7 @@
      justify-content: center;
      align-items: flex-start;
      margin-top: 20px;
+     overflow-x: hidden;
  }
 
 .cont-products{

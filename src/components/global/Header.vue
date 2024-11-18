@@ -9,13 +9,13 @@
            <router-link exact to="/"> shop</router-link>
         </li>
         <li>
-          <router-link to="/Category">about</router-link>
+          <a href="#Category">Category</a>
         </li>
         <li>
-          <router-link to="/products">products</router-link>
+          <a href="#Toproducts">Top products</a>
         </li>
         <li>
-          <router-link to="/brands">contact us</router-link>
+          <a href="https://wa.me/201140665450" target="_blank">Contact Us</a>
         </li>
         <span v-on:click="disappear()" id="x">x</span>
       </ul>
@@ -31,7 +31,7 @@
             <font-awesome-icon class="icon" :icon="['fas', 'bell']" />
             <span>0</span>
         </div>
-        <div  class="contIcon account">
+        <div  v-if="false"class="contIcon account">
           <font-awesome-icon v-on:click="appearAccountMenue()" class="icon accountIcon" :icon="['fas', 'user']" />
           <!-- <span>23</span> -->
           <div id="accountMenue" class="accountMenue">

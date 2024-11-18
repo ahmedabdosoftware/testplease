@@ -3,6 +3,8 @@ import { defineStore } from "pinia";
 export const useCartStore = defineStore("cart", {
   state: () => ({
     cartItems: JSON.parse(localStorage.getItem("cartItems")) || [], // تحميل البيانات من LocalStorage
+    shippingCost: Number(localStorage.getItem("shippingCost")) || 55, // تحميل قيمة الشحن من localStorage أو القيمة الافتراضية
+
   }),
   actions: {
 
@@ -29,7 +31,10 @@ export const useCartStore = defineStore("cart", {
       // حفظ السلة في LocalStorage
       localStorage.setItem("cartItems", JSON.stringify(this.cartItems));
     },
-
+    updateShippingCost(cost) {
+      this.shippingCost = cost; // تحديث قيمة تكلفة الشحن
+      localStorage.setItem("shippingCost", cost); // حفظ القيمة في localStorage
+    },
     
     clearCart() {
       this.cartItems = [];
