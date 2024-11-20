@@ -34,10 +34,10 @@
             />
           </div>
           <span> $ {{ oneProduct.priceMaterial }}</span>
-          <img
-              class="shoppingCart"
-              src="https://images.all-free-download.com/images/graphiclarge/green_shopping_cart_icon_vector_280755.jpg"
-            />
+          <router-link :to="{ name: 'ProductDetails', params: { id: oneProduct.id } }">
+              <font-awesome-icon class="icon shoppingCart" :icon="['fas', 'cart-shopping']" />
+          </router-link>
+
         </div>
       </div>
     <!-- </router-link> -->
@@ -121,7 +121,7 @@
   /* price and  short descrption */
   .contPro > div > div:nth-child(2) span:nth-of-type(2) {
     text-transform: capitalize;
-    color: #088178;
+    color: rgb(91, 89, 89);
     font-size: 18px;
   }
   .cont-star {
@@ -156,11 +156,14 @@
     position: absolute;
     right: 10px;
     bottom: 14px;
+    color:  rgb(196, 196, 196);
+    color:  rgb(158, 108, 108);
+    color:  rgb(176, 151, 151);
   }
 @media (max-width: 460px) {
   .descrption,.title {
-    font-size: 12px; /* حجم الخط أصغر قليلاً للشاشات الصغيرة */
-    max-width: 100%; /* تعيين عرض الوصف ليتناسب مع الحاوية */
+    font-size: 12px; 
+    max-width: 100%; 
   }
   /*img => flower */
   .contPro > div > div:first-child img {
@@ -168,6 +171,10 @@
     height: 80%;
     border-radius: 15px;
     margin-top: 20px;
+  }
+  .shoppingCart {
+    width: 30px;
+    height: 30px;
   }
   
 }

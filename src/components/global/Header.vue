@@ -291,7 +291,7 @@ position: relative;
     display: none;
   }
   /* media => ipad */
-@media(max-width:799px){
+@media(max-width:850px){
 
 
    header ul{

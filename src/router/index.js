@@ -54,4 +54,9 @@ const router = createRouter({
   routes
 })
 
+router.afterEach((to, from)=>{
+  if(to.fullPath != from.fullPath)
+    window.scrollTo(0,0);
+
+})
 export default router

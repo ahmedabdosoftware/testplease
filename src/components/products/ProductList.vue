@@ -238,7 +238,7 @@ data(){
 }
 
  /* media => ipad */
- @media(max-width:799px){
+ @media(max-width:850px){
   .allContentProduct >div{ 
       width: 40% !important;
   }

@@ -20,6 +20,8 @@
     "pinia": "^2.2.6",
     "sweetalert": "^2.1.2",
     "swiper": "^11.1.14",
+    "typed.js": "^2.1.0",
+    "vee-validate": "^4.14.7",
     "vue": "^3.5.12",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.0"

@@ -3,12 +3,10 @@
    <!--==================== HOME ====================-->
       <div class="home__container container ">
         <div class="home__data" ref="homeData">
-            <h2 class="home__subtitle">MAKE YOUR</h2>
-            <h1 class="home__title">BODY SHAPE</h1>
-            <p class="home__description">
-                In here we will help you to shape and build your ideal
-                body and live your life to the fullest.
-            </p>
+          <h2 class="home__subtitle typewriter-text" ref="subtitle"></h2>
+          <h1 class="home__title typewriter-text" ref="title"></h1>
+          <p class="home__description typewriter-text" ref="description">
+          </p>
             <a href="#Toproducts" class="button button__flex">
               Shop Now <font-awesome-icon :icon="['fas', 'arrow-right']" />
             </a>
@@ -36,49 +34,91 @@ export default {
   },
   mounted() {
 
-    // تحديد العنصر الذي نريد مراقبته
-    const target = this.$refs.homeData;
-    // إعداد Intersection Observer
-    this.observer = new IntersectionObserver(this.handleIntersection); 
-    // بدء المراقبة
-    this.observer.observe(target);
+    // texts from left, but canceled right Now
+      // const target = this.$refs.homeData;
+      // this.observer = new IntersectionObserver(this.handleIntersection); 
+      // this.observer.observe(target);
+   
+    // type texts
+      this.startTypewriterEffects(); 
 
-
-
-    // مراقبة العنصر الخاص بالصورة
-    const homeImageTarget = this.$refs.homeImage;
-      // إعداد Intersection Observer للصورة
-    this.imageObserver = new IntersectionObserver(this.handleImageIntersection);
-      // بدء المراقبة على الصورة
-    this.imageObserver.observe(homeImageTarget);
+    // image from right
+      const homeImageTarget = this.$refs.homeImage;
+      this.imageObserver = new IntersectionObserver(this.handleImageIntersection);
+      this.imageObserver.observe(homeImageTarget);
   },
   methods: {
-    handleIntersection(entries) {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          // إضافة كلاس لتحريك العنصر عند الوصول له
-          entry.target.classList.add('show-left');
-          console.log("here")
-        } else {
-          // إزالة الكلاس عندما يختفي
-          entry.target.classList.remove('show-left');
-        }
-      });
-    },
-    handleImageIntersection(entries) {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          // إضافة كلاس لتحريك الصورة من الجهة اليمنى
-          entry.target.classList.add('show-right');
-        } else {
-          // إزالة الكلاس عندما يختفي
-          entry.target.classList.remove('show-right');
-        }
-      });
-    }
+    
+    // texts from left, but canceled right Now
+      // handleIntersection(entries) {
+      //   entries.forEach(entry => {
+      //     if (entry.isIntersecting) {
+      //       entry.target.classList.add('show-left');
+      //       console.log("here")
+      //     } else {
+      //       entry.target.classList.remove('show-left');
+      //     }
+      //   });
+      // },
+
+    // type texts
+        async typewriterEffect(element, text, speed, applyTransform = true) {
+          const words = text.split(" "); // تقسيم النص إلى كلمات
+          element.textContent = ""; // تفريغ العنصر قبل الإضافة
+          for (let i = 0; i < words.length; i++) {
+            const span = document.createElement("span"); // إنشاء عنصر لكل كلمة
+            span.textContent = words[i]; // إضافة الكلمة
+            span.style.opacity = "0"; // البداية شفافة
+            
+            // إذا كان applyTransform صحيحًا، يتم تطبيق التأثيرات
+            if (applyTransform) {
+              span.style.transform = "translateY(20px) scale(0.9)"; // بداية الكلمة أسفل وأصغر
+            } else {
+              span.style.transform = "none"; // عدم تطبيق التأثير في الجملة الثالثة
+            }
+
+            span.style.transition = `opacity ${speed}ms ease-in-out, transform ${speed}ms ease-in-out`; // تأثير الشفافية والحركة
+            element.appendChild(span);
+            span.style.display = "inline-block";
+            element.appendChild(document.createTextNode(" ")); // إضافة مسافة بين الكلمات
+            
+            // التأخير لإظهار الكلمة
+            setTimeout(() => {
+              span.style.opacity = "1";
+              span.style.transform = "translateY(0) scale(1)"; // العودة إلى الوضع الطبيعي
+            }, i * speed);
+          }
+          // انتظار انتهاء تأثير آخر كلمة قبل البدء بالسطر التالي
+          await new Promise((resolve) =>
+            setTimeout(resolve, words.length * speed + 500)
+          );
+        },
+
+        async startTypewriterEffects() {
+          // التأثير على الجمل واحدة تلو الأخرى
+          await this.typewriterEffect(this.$refs.subtitle, "MAKE YOUR", 200); // الجملة الأولى
+          await this.typewriterEffect(this.$refs.title, "BODY SHAPE", 200); // الجملة الثانية
+          await this.typewriterEffect(
+            this.$refs.description,
+            "In here we will help you to shape and build your ideal body and live your life to the fullest.",
+            100,
+            false // لا تطبيق تأثير translateY على الجملة الثالثة
+          ); // الجملة الثالثة
+        },
+
+
+    // image from right
+      handleImageIntersection(entries) {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('show-right');
+          } else {
+            entry.target.classList.remove('show-right');
+          }
+        });
+      }
   },
   destroyed() {
-    // تأكد من إيقاف المراقبة عند تدمير المكون
     if (this.observer) {
       this.observer.disconnect();
     }
@@ -124,9 +164,9 @@ export default {
     justify-content: center;
     align-items: flex-start;
     padding-left: 60px;
-    opacity: 0;
-    transition: opacity 1s ease, transform 1s ease;
-    transform: translateX(-100%); /* العنصر يبدأ مخفيًا */
+    // opacity: 0;
+    // transition: opacity 1s ease, transform 1s ease;
+    // transform: translateX(-100%); /* العنصر يبدأ مخفيًا */
 
 
   }
@@ -166,7 +206,7 @@ export default {
     margin-bottom: 15px;
     opacity: 0;
     transform: translateX(100%); /* إخفاء الصورة ناحية اليمين */
-    transition: opacity 1s ease, transform 1s ease;
+    transition: opacity 1s ease, transform 2s ease;
   }
   .home__img.show-right {
   opacity: 1;
@@ -239,6 +279,10 @@ export default {
     .button i{
       font-size: 1.25rem;
       transition: transform .3s;
+    }
+    .typewriter-text span {
+      opacity: 0;
+      transform: translateY(10px); /* حركة بسيطة للأسفل */
     }
 
 

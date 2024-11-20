@@ -4,45 +4,101 @@
     <p class="description">
       Dynamically whiteboard frictionless models for client-centric architectures.
     </p>
-    <form @submit.prevent="submitForm">
+    <!-- Use Form component -->
+    <Form @submit="creatNewOrder">
       <div class="row">
         <div class="form-group half-width">
           <label for="first-name">First Name</label>
-          <input id="first-name" type="text" v-model="formData.firstName" required />
+          <!-- Use Field component with validation rules -->
+          <Field
+            id="first-name"
+            name="firstName"
+            v-model="formData.firstName"
+            :rules="requiredRule"
+            type="text"
+          />
+          <!-- Use ErrorMessage component to display validation errors -->
+          <ErrorMessage name="firstName" class="error-message" />
         </div>
         <div class="form-group half-width">
           <label for="second-name">Second Name</label>
-          <input id="second-name" type="text" v-model="formData.secondName" required />
+          <Field
+            id="second-name"
+            name="secondName"
+            v-model="formData.secondName"
+            :rules="requiredRule"
+            type="text"
+          />
+          <ErrorMessage name="secondName" class="error-message" />
         </div>
       </div>
+
       <div class="form-group">
         <label for="street-address">Street Address</label>
-        <input id="street-address" type="text" v-model="formData.streetAddress" required />
+        <Field
+          id="street-address"
+          name="streetAddress"
+          v-model="formData.streetAddress"
+          :rules="requiredRule"
+          type="text"
+        />
+        <ErrorMessage name="streetAddress" class="error-message" />
       </div>
+
       <div class="row">
         <div class="form-group half-width">
           <label for="city">City</label>
-          <input id="city" type="text" v-model="formData.city" required />
+          <Field
+            id="city"
+            name="city"
+            v-model="formData.city"
+            :rules="requiredRule"
+            type="text"
+          />
+          <ErrorMessage name="city"  class="error-message"/>
         </div>
         <div class="form-group half-width">
           <label for="zip-code">Town</label>
-          <input id="zip-code" type="text" v-model="formData.zipCode" required />
+          <Field
+            id="zip-code"
+            name="zipCode"
+            v-model="formData.zipCode"
+            :rules="requiredRule"
+            type="text"
+          />
+          <ErrorMessage name="zipCode" class="error-message" />
         </div>
       </div>
+
       <div class="row">
         <div class="form-group half-width">
-          <label for="Country">Country</label>
-          <input id="Country" type="text" readonly class="readOnlyInput" v-model="formData.country" required />
+          <label for="country">Country</label>
+          <input
+            id="country"
+            type="text"
+            readonly
+            class="readOnlyInput"
+            v-model="formData.country"
+          />
         </div>
       </div>
+
       <div class="row">
         <div class="form-group half-width">
           <label for="phone-number">Phone Number</label>
-          <input id="phone-number"type="number" v-model="formData.phoneNumber" required />
+          <Field
+            id="phone-number"
+            name="phoneNumber"
+            v-model="formData.phoneNumber"
+            :rules="phoneNumberRule"
+            type="text"
+          />
+          <ErrorMessage name="phoneNumber" class="error-message" />
         </div>
       </div>
-      <button @click="creatNewOrder" type="submit" class="submit-button">Confirm Order</button>
-    </form>
+
+      <button type="submit" class="submit-button">Confirm Order</button>
+    </Form>
   </div>
 </template>
 
@@ -50,6 +106,9 @@
 
    // sweetalert 
    import sweetalert from "sweetalert";
+
+   // Import vee-validate components
+   import { Form, Field, ErrorMessage } from 'vee-validate'; 
 
    // state , Actions
    import { mapState, mapActions } from "pinia";
@@ -59,6 +118,11 @@
 
 export default {
   name: "AddressForm",
+  components: {
+    Form,
+    Field,
+    ErrorMessage,
+  },
   data() {
     return {
       formData: {
@@ -78,11 +142,29 @@ export default {
   methods: {
     ...mapActions(useOrdersStore, ['addOrder']),
     ...mapActions(useCartStore, ['clearCart']),
-
-    submitForm() {
-      console.log("Form submitted:", this.formData);
-      // Handle form submission (e.g., validation, API calls)
+    
+    // ============ validation rules => start =====================================
+    requiredRule(value) {
+      
+      if(value.trim() == ''){
+        return "Field is required"
+      }
+       // All is good
+       return true;
     },
+    phoneNumberRule(value) {
+
+      if(value.trim() == ''){
+        return "Field is required"
+      }
+      const phoneRegex = /^\d{11}$/;  
+      if(!phoneRegex.test(value)){
+        return "Enter valid number please"
+      }
+       // All is good
+       return true;
+    },
+    // ============ validation rules => end =====================================
      // ============ creat New oredr => start =====================================
 
      async creatNewOrder() {
@@ -149,11 +231,13 @@ export default {
       sweetalert("Order Has Been Sent", "we will conect you soon!", "success");
       this.clearCart()
       this.$router.push({ name: 'shop'});
-
+      
     } catch (error) {
       console.error("order has not sent  ", error);
       this.isLoading = false;
-      sweetalert("order has not sent", "Try Again", "error");
+      this.clearCart()
+      this.$router.push({ name: 'shop'});
+      sweetalert("order has not sent", "Try Again", error);
     }
   },
     // ============ creat New oredr => end =======================================
@@ -237,6 +321,20 @@ select:focus {
   transition: background-color 0.3s ease;
 }
 .submit-button:hover {
-  background-color: #1e40af;
+  background-color:  rgb(127, 6, 6);
 }
+.error-message {
+  color: red;
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 5px;
+  text-align: start;
+  background-color: rgba(255, 0, 0, 0.1);  /* خلفية خفيفة باللون الأحمر لتمييز الرسالة */
+  padding: 5px;
+  border-radius: 4px;
+}
+/* 
+<!-- <img  :src="require('@/assets/background/bg (3).png')"  alt="home image"  ref="homeImage" class="home__img"> -->
+width: 80%;
+height: 300px; */
 </style>
