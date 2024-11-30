@@ -1,7 +1,9 @@
 <template>
     <header>
       <div class="logo-cont">
-        <img class="logo-img"  :src="require('@/assets/simbaLogo.png')" >
+        <img class="logo-img"  :src="require('@/assets/logoUpdated.svg')" >
+        <!-- <img class="logo-img"  :src="require('@/assets/simbaLogo.png')" > -->
+        <!-- <img class="logo-img"  :src="require('@/assets/simba.png')" > -->
         <span class="logo">simba</span>
       </div>
       <ul id="nav">
@@ -152,8 +154,8 @@
       font-optical-sizing: auto;
     }
     .logo-img{
-      width: 70px;
-      height: 70px;
+      width: 55px;
+      height: 55px;
       margin-right: 10px;
     }
   }

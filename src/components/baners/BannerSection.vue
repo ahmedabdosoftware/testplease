@@ -4,7 +4,7 @@
       <div class="content" ref="content">
         <h1 class="headline">Elevate Your Strength</h1>
         <p class="subheadline">Discover Premium Protein for Maximum Performance</p>
-        <button class="cta-button">Shop Now</button>
+        <a href="#Toproducts"><button class="cta-button">Shop Now</button></a>
       </div>
     </div>
   </div>

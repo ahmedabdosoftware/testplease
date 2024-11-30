@@ -36,7 +36,7 @@
       <BannerSection>
       </BannerSection> 
       <!-- product section -->
-      <ProductList tag="best">
+      <ProductList tag="hot">
         <template #section-title>
           Hot <span class="mark-it">Deals</span>
         </template>

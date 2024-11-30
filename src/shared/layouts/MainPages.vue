@@ -37,5 +37,8 @@
     }
   }
 }
+.view{
+  overflow-x: hidden;
+}
   </style>
   

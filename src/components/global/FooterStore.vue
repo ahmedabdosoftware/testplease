@@ -72,7 +72,7 @@ The design is simple
                     <div class="footer_para">
                         <h3 id="footer_first_head">Start Your Jounery Now</h3>
                         <br>
-                        <h5>Michael-Miller99@gmail.com</h5>
+                        <h5>ahmedabdosoftware123@gmail.com</h5>
                         <h5>www.Devlop-Security.com</h5>
                    
                     </div>

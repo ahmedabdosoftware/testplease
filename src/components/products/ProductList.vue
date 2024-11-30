@@ -34,7 +34,7 @@
 
 // componnents  Vue.js components
   import BoxProduct from "@/components/products/BoxProduct.vue";
-// actions 
+  // actions 
   import {  mapState , mapActions } from 'pinia'
   //store
   import { useProductsStore } from '@/store/products/products.js'

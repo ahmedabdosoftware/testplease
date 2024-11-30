@@ -100,6 +100,12 @@
       <button type="submit" class="submit-button">Confirm Order</button>
     </Form>
   </div>
+  <div class="form-container loading">
+      <CircleLoader
+        :show="isLoading"
+      >
+    </CircleLoader>
+  </div>
 </template>
 
 <script>
@@ -109,6 +115,8 @@
 
    // Import vee-validate components
    import { Form, Field, ErrorMessage } from 'vee-validate'; 
+   // components
+   import CircleLoader from "@/shared/components/loading/CircleLoader.vue";
 
    // state , Actions
    import { mapState, mapActions } from "pinia";
@@ -122,9 +130,12 @@ export default {
     Form,
     Field,
     ErrorMessage,
+    CircleLoader,
+
   },
   data() {
     return {
+      isLoading:false,
       formData: {
         firstName: "",
         secondName: "",
@@ -168,7 +179,7 @@ export default {
      // ============ creat New oredr => start =====================================
 
      async creatNewOrder() {
-    this.isLoading = true;
+     this.isLoading = true;
 
     try {
       if (this.cartItems.length === 0) {
@@ -182,7 +193,7 @@ export default {
         return {
           id: item.id,
           name: item.name,
-          // price_offer: item.offerPrice || "", // استخدام السعر إذا كان متوفراً
+          price_offer: 0, // استخدام السعر إذا كان متوفراً
           quantity: item.quantity,
           productInfo: {
             // buyPrice: item.priceMaterial || 0,
@@ -224,11 +235,11 @@ export default {
       console.log("قبل الإرسال:", newOrder);
 
       await this.addOrder(newOrder);
+      sweetalert("Order Has Been Sent", "we will conect you soon!", "success");
 
       console.log("بعد الإرسال");
 
       this.isLoading = false;
-      sweetalert("Order Has Been Sent", "we will conect you soon!", "success");
       this.clearCart()
       this.$router.push({ name: 'shop'});
       

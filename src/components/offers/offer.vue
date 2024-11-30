@@ -1,22 +1,70 @@
 <template>
     <!--==================== OFFERS ====================-->            
     <section class="offer">
-      <img src="@/assets/categoris/Pro2.png">
+      <img v-if="filteredProducts" :src="filteredProducts.imageUrl[0]">
       <div>
         <p>exclusifly avilable on <span class="mark-name">simba store</span></p>
         <p>Dragon brand &</p>
         <pre>There have also been special discounts in the tax charged charged 
            for hybrid with Dragon avilable on</pre>
-        <button>buy now</button>
+          <router-link v-if="filteredProducts" :to="{ name: 'ProductDetails', params: { id: filteredProducts.id } }">
+              <button>buy now</button>
+          </router-link>
       </div>
     </section>
 </template>
 
 <script>
+
+// actions 
+  import {  mapState , mapActions } from 'pinia'
+  //store
+  import { useProductsStore } from '@/store/products/products.js'
 export default {
-  // script code هنا لو تحتاج إضافة أي أكواد جافاسكريبت أخرى
-}
+
+  name: "offer",
+  computed: {
+  ...mapState(useProductsStore, ['products']),
+  // ============ filter => start=======================================
+        
+    // الفلترة النهائية
+    filteredProducts() {
+      let filteredProducts = this.products;
+
+      // الخطوة 1: الفلترة بناءً على tag أو categoryId
+   
+        filteredProducts = filteredProducts.filter(product => product.tags?.includes("top"));
+
+      return filteredProducts[0];
+    },
+  // ============ filter => end=======================================
+
+  },
+  
+  methods:{
+  
+    // ============ my actions => start=======================================
+
+    ...mapActions(useProductsStore, ['fetchProducts']),
+
+    // ============ my actions => end==========================================
+
+  
+
+},
+  async created(){
+    await this.fetchProducts()  
+    // console.log("all:", this.products[0].tags)
+    console.log("filtred one",this.filteredProducts)
+},
+data(){
+    return{
+     
+    }
+  }
+  }
 </script>
+
 
 <style scoped lang="scss">
 .offer{

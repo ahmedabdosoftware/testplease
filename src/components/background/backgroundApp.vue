@@ -8,13 +8,13 @@
           <p class="home__description typewriter-text" ref="description">
           </p>
             <a href="#Toproducts" class="button button__flex">
-              Shop Now <font-awesome-icon :icon="['fas', 'arrow-right']" />
+             <span> Shop Now</span> <font-awesome-icon class="icon" :icon="['fas', 'arrow-right']" />
             </a>
         </div>
           
         <div class="home__images">
             <!-- <img  :src="require('@/assets/img/home-img.png')"  alt="home image"  ref="homeImage" class="home__img"> -->
-            <img  :src="require('@/assets/products/product7.png')"  alt="home image"  ref="homeImage" class="home__img">
+            <img  :src="images[currentImageIndex]"  alt="home image"  ref="homeImage" class="home__img">
             
             <div class="home__triangle home__triangle-3"></div>
             <div class="home__triangle home__triangle-2!"></div>
@@ -29,7 +29,17 @@ export default {
   name: 'BackgroundApp',
   data() {
     return {
-      observer: null
+      observer: null,
+      images: [
+      require('@/assets/products/product7.png'),
+      require('@/assets/products/product1.png'),
+      require('@/assets/products/product2.png'),
+      require('@/assets/products/product4.png'),
+      require('@/assets/products/product5.png'),
+      require('@/assets/products/product6.png'),
+      // require('@/assets/products/product8.png'),
+    ],
+    currentImageIndex: 0,
     };
   },
   mounted() {
@@ -38,7 +48,10 @@ export default {
       // const target = this.$refs.homeData;
       // this.observer = new IntersectionObserver(this.handleIntersection); 
       // this.observer.observe(target);
-   
+
+    // startImageRotation
+      this.startImageRotation();
+
     // type texts
       this.startTypewriterEffects(); 
 
@@ -60,7 +73,12 @@ export default {
       //     }
       //   });
       // },
-
+      startImageRotation() {
+        setInterval(() => {
+          this.currentImageIndex =
+            (this.currentImageIndex + 1) % this.images.length;
+        }, 3000); // تغيير الصورة كل 3 ثوانٍ
+      },
     // type texts
         async typewriterEffect(element, text, speed, applyTransform = true) {
           const words = text.split(" "); // تقسيم النص إلى كلمات
@@ -96,8 +114,8 @@ export default {
 
         async startTypewriterEffects() {
           // التأثير على الجمل واحدة تلو الأخرى
-          await this.typewriterEffect(this.$refs.subtitle, "MAKE YOUR", 200); // الجملة الأولى
-          await this.typewriterEffect(this.$refs.title, "BODY SHAPE", 200); // الجملة الثانية
+          await this.typewriterEffect(this.$refs.subtitle, "BUILD  YOUR BODY,", 200); // الجملة الأولى
+          await this.typewriterEffect(this.$refs.title, "BUILD YOUR DREAM", 200); // الجملة الثانية
           await this.typewriterEffect(
             this.$refs.description,
             "In here we will help you to shape and build your ideal body and live your life to the fullest.",
@@ -175,13 +193,13 @@ export default {
   transform: translateX(0); /* يتحرك للموضع الطبيعي عند ظهوره */
 }
   .home__subtitle{
-    font-size:44px;
+    font-size:28px;
     -webkit-text-stroke: 1px rgb(127, 120, 120);
     color: transparent;
   }
   
   .home__title{
-    font-size: 44px;
+    font-size: 28px;
     font-weight: 600 ;
     margin: .5rem 0;
     color: rgb(129, 6, 6);
@@ -206,7 +224,7 @@ export default {
     margin-bottom: 15px;
     opacity: 0;
     transform: translateX(100%); /* إخفاء الصورة ناحية اليمين */
-    transition: opacity 1s ease, transform 2s ease;
+    transition: opacity 1s ease, transform 1s ease;
   }
   .home__img.show-right {
   opacity: 1;
@@ -290,20 +308,20 @@ export default {
     .home__triangle{
       height: 90%;
       // background-color: red;
-  }
-  .home__images{
-    width: 100% ;
-    // background-color: blue;    
-  }
-  .home__img{
-    margin-left: 80px;
-  }
-  .home__data{
-    // height:500px;
-    width: 100%;
-    // background-color: rgb(69, 69, 94);    
+    }
+    .home__images{
+      width: 100% ;
+      // background-color: blue;    
+    }
+    .home__img{
+      margin-left: 80px;
+    }
+    .home__data{
+      // height:500px;
+      width: 100%;
+      // background-color: rgb(69, 69, 94);    
 
-  }
+    }
   }
 
   @media(max-width:780px){
@@ -316,7 +334,7 @@ export default {
     // background-color: blue;    
   }
   .home__img{
-    margin-bottom: 65px;
+    // margin-bottom: 65px;
   }
   .home__data{
     // height:500px;
@@ -350,7 +368,16 @@ export default {
   @media(max-width:415px){
    
   .home__img{
-    margin-bottom: 105px;
+    margin-bottom: 190px;
+    width: 60%;
+
+  }
+  
+  }
+  @media (min-width:410px) and (max-width:412px) and (max-height: 732px){
+   
+  .home__img{
+    margin-bottom: 265px;
     width: 60%;
 
   }
@@ -361,7 +388,7 @@ export default {
   @media(max-width:395px){
    
   .home__img{
-    margin-bottom: 160px;
+    margin-bottom: 200px;
     width: 60%;
   }
  
@@ -396,9 +423,86 @@ export default {
  
   }
 
+  @media (max-width: 361px)  and (max-height: 742px){
+  .home__img {
+    margin-bottom: 300px !important;
+  }
+
+}
+
+@media (max-width: 361px) and (max-height: 642px){
+  .home__img {
+    margin-bottom: 360px !important;
+  }
+  .home__data {
+    padding-left: 20px;
+  }
+  .home__description {
+    font-size: 12px;
+  }
+}
+@media (max-width: 355px) {
+  .home__img {
+    margin-bottom: 290px !important;
+  }
+}
+@media (max-width: 345px) {
+  .home__img {
+    margin-bottom: 180px !important;
+  }
+}
 
 
 
+@media (max-width: 325px) {
+  .BackgroundApp{
+    // width: 100%;
+    // height: 80%;
+    // overflow: hidden;
+    // background-color: #8B0000; /* لون أحمر داكن لخلفية التطبيق */
+
+
+  }
+  .home__data{
+    height: 300px;
+    .home__subtitle,
+    .home__title{
+      font-size: 20px;
+    }
+  }
+  .button{
+    .button {
+        width: 100px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        font-size: 15px;
+        padding-left: 10px;
+    }
+    .icon{
+      width: 10px;
+      height: 10px;
+    }
+  }
+  .home__img {
+    width: 35%;
+    margin-bottom: 430px !important;
+  }
+  .home__triangle{
+      height: 30%;
+      // background-color: red;
+  }
+}
+
+
+
+
+@media (max-width: 322px) and (min-height: 655px){
+  .home__img {
+    margin-bottom: 300px !important;
+  }
+ 
+}
 
 
 
