@@ -171,8 +171,8 @@ data(){
       .mark-it{
         color: white;
         // background-color: rgb(22, 175, 22);
-        // background-color:  hsl(79, 63%, 50%);
-        background-color: rgb(127, 6, 6);
+        background-color:  hsl(79, 63%, 50%);
+        // background-color: rgb(127, 6, 6);
         display: inline-block;
         padding-left: 25px;
         padding-right: 25px;

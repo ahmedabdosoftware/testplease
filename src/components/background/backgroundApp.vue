@@ -202,7 +202,7 @@ export default {
     font-size: 28px;
     font-weight: 600 ;
     margin: .5rem 0;
-    color: rgb(129, 6, 6);
+    // color: rgb(129, 6, 6);
 
   }
   
@@ -213,7 +213,7 @@ export default {
   
   .home__description{
     margin-bottom: 2.5rem;
-    color: rgb(129, 6, 6);
+    // color: rgb(129, 6, 6);
 
   }
 
@@ -252,14 +252,14 @@ export default {
   .home__triangle-1{
     width: 405px;
     background-color:  hsl(79, 72%, 55%);
-    background-color: rgba(139, 0, 0, 0.9); /* لون أحمر داكن مع شفافية طفيفة */
+    // background-color: rgba(139, 0, 0, 0.9); /* لون أحمر داكن مع شفافية طفيفة */
 
   }
   
   .home__triangle-2{
     width: 305px; 
     background-color:  hsl(79, 67%, 52%);
-    background-color: rgba(128, 0, 0, 0.85); /* لون أحمر مع شفافية خفيفة */
+    // background-color: rgba(128, 0, 0, 0.85); /* لون أحمر مع شفافية خفيفة */
 
   }
   
@@ -268,7 +268,7 @@ export default {
   .home__triangle-3{
     width: 505px;
     background-color:  hsl(79, 63%, 50%);
-    background-color: rgba(120, 0, 0, 0.8); /* لون أحمر داكن مع شفافية أكثر */
+    // background-color: rgba(120, 0, 0, 0.8); /* لون أحمر داكن مع شفافية أكثر */
 
   }
  
@@ -282,16 +282,16 @@ export default {
       // border: 2px solid hsl(79, 97%, 77%);
       // color:  hsl(180, 4%, 12%);
       color: white;
-      border: 2px solid red;
+      border: 2px solid hsl(79, 89%, 34%);
       font-weight:600 ;
       border-radius: 4px;
       cursor: pointer;
       // transition: background .3s;
-      background-color: rgba(120, 0, 0, 0.8); /* لون أحمر داكن مع شفافية أكثر */
+      background-color: hsl(79, 96%, 32%); /* لون أحمر داكن مع شفافية أكثر */
 
     }
     .button:hover{
-      background-color: red;
+      background-color:rgb(1, 86, 1);
     }
   
     .button i{

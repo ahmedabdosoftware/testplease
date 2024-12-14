@@ -1,7 +1,8 @@
 <template>
     <header>
       <div class="logo-cont">
-        <img class="logo-img"  :src="require('@/assets/logoUpdated.svg')" >
+        <img class="logo-img"  :src="require('@/assets/logo.svg')" >
+        <!-- <img class="logo-img"  :src="require('@/assets/logoUpdated.svg')" > -->
         <!-- <img class="logo-img"  :src="require('@/assets/simbaLogo.png')" > -->
         <!-- <img class="logo-img"  :src="require('@/assets/simba.png')" > -->
         <span class="logo">simba</span>
@@ -126,7 +127,12 @@
     position: sticky;
     top: 0px;
     z-index: 100;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
   }
+  header:hover {
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+}
   ul {
     width: 400px;
     display: flex;
@@ -178,6 +184,7 @@
       position: relative;
       border-radius: 4px;
     >span{
+      // background-color:rgb(127, 6, 6);
       background-color:rgb(127, 6, 6);
       position: absolute;
       bottom: 20px;
@@ -275,7 +282,7 @@ position: relative;
 
   .router-link-exact-active:not(.accountMenueLink) {
     color:var(--active);
-    color:rgb(127, 6, 6);
+    // color:rgb(127, 6, 6);
     position: relative;
   }
   .router-link-exact-active:not(.accountMenueLink)::after{
@@ -284,7 +291,7 @@ position: relative;
     bottom: -5px;
     left: 5px;
     background-color: var(--active);
-    background-color: rgb(127, 6, 6);
+    // background-color: rgb(127, 6, 6);
     width: 28px;
     height: 3px;
     border: 2px;

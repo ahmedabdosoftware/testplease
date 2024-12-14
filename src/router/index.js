@@ -6,6 +6,8 @@ import ProductDetails from '../views/products/ProductDetails'
 import ProductOfCategory from '../views/ProductOfCategory/ProductOfCategory'
 import CartPage from '../views/cartPage/CartPage'
 import CheckOut from '../views/checkout/CheckOut'
+import payment from '../views/payment/payment'
+import wallet from '../views/payment/wallet'
 
 // singn page
 import SingUPAndSingIn from '../views/sign/SingUPAndSingIn.vue'
@@ -44,6 +46,16 @@ const routes = [
         path: '/CheckOut',
         name: 'CheckOut',
         component: CheckOut,
+      },
+      {
+        path: '/payment',
+        name: 'payment',
+        component: payment,
+      },
+      {
+        path: '/wallet',
+        name: 'wallet',
+        component: wallet,
       },
     ],
   },

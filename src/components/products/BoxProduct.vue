@@ -51,10 +51,18 @@
           <router-link 
             v-if="!oneProduct.displayOutOfStock" 
             :to="{ name: 'ProductDetails', params: { id: oneProduct.id } }">
-            <font-awesome-icon class="icon shoppingCart" :icon="['fas', 'cart-shopping']" />
+            <!-- <font-awesome-icon class="icon shoppingCart" :icon="['fas', 'cart-shopping']" /> -->
+            <img
+              class="shoppingCart"
+              src="https://images.all-free-download.com/images/graphiclarge/green_shopping_cart_icon_vector_280755.jpg"
+            />
           </router-link>
           <div v-else >
-            <font-awesome-icon class="icon shoppingCart disabled-cart" :icon="['fas', 'cart-shopping']" />
+            <!-- <font-awesome-icon class="icon shoppingCart disabled-cart" :icon="['fas', 'cart-shopping']" /> -->
+            <img
+              class="shoppingCart disabled-cart"
+              src="https://images.all-free-download.com/images/graphiclarge/green_shopping_cart_icon_vector_280755.jpg"
+            />
           </div>
 
 

@@ -275,7 +275,7 @@ letter-spacing: 4px;
 grid-area: subscribe;
 font-family: sans-serif;
 background: #2cb95b;
-background-color: rgb(127, 6, 6);
+// background-color: rgb(127, 6, 6);
 
 cursor: pointer;
 margin-top: auto;
@@ -442,8 +442,8 @@ color: white;
 letter-spacing: 1px;
 grid-area: subscribe;
 font-family: sans-serif;
-// background: #2cb95b;
-background-color: rgb(127, 6, 6);
+background: #2cb95b;
+// background-color: rgb(127, 6, 6);
 cursor: pointer;
 margin-top: auto;
 margin-bottom: auto;
@@ -459,14 +459,14 @@ transition: all 0.2s;
 
 .subscriber_button:hover{
 
-background: rgb(0, 140, 255);
+background:green;
 
 
 }
 
 .footer_mid_subscriber_button:hover{
 
-background: rgb(0, 140, 255);
+background: green;
 }
 
 .footer_mid_icons{
@@ -477,7 +477,7 @@ margin: 2%;
 
 .footer_mid_icons_inner:hover{
 
-color: #006aff;
+color: green;
 }
 
 .quick_signup{
@@ -493,7 +493,7 @@ margin-bottom: 4%;
 .footer_mid_icons_inner{
 
 font-size: 2rem;
-color: blue;
+color: green;
 /* border: 1px solid blue; */
 }
 

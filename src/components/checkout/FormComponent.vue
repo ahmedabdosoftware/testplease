@@ -96,11 +96,36 @@
           <ErrorMessage name="phoneNumber" class="error-message" />
         </div>
       </div>
+      <!-- Payment Methods Section -->
+      <div class="payment-methods">
+            <h3>Payment Methods</h3>
+            <div class="payment-options">
+              <label class="payment-option">
+                <input type="radio" name="paymentMethod" value="Cash" v-model="formData.paymentMethod" />
+                <div class="payment-icon cash"> <img src="../../assets/payments/cash.png"></div>
+                <span>Cash</span>
+              </label>
+
+              <label class="payment-option">
+                <input type="radio" name="paymentMethod" value="Wallet" v-model="formData.paymentMethod" />
+                <div class="payment-icon wallet"> <img src="../../assets/payments/wallet.png"></div>
+                <span>Wallet</span>
+              </label>
+
+              <label class="payment-option">
+                <input type="radio" name="paymentMethod" value="Card" v-model="formData.paymentMethod" />
+                <div class="payment-icon card"> <img src="../../assets/payments/credit-card.png"> </div>
+                <span>Card</span>
+              </label>
+            </div>
+            <ErrorMessage name="paymentMethod" class="error-message" />
+          </div>
 
       <button type="submit" class="submit-button">Confirm Order</button>
+     
     </Form>
   </div>
-  <div class="form-container loading">
+  <div v-if="isLoading" class="form-container loading">
       <CircleLoader
         :show="isLoading"
       >
@@ -144,6 +169,8 @@ export default {
         zipCode: "",
         country: "Egypt",
         phoneNumber: "",
+        paymentMethod: "Cash", // New field for payment method
+
       },
     };
   },
@@ -226,6 +253,7 @@ export default {
           country: this.formData.country,
           phoneNumber: this.formData.phoneNumber,
         },
+        paymentMethod: this.formData.paymentMethod,
         shipping: this.shippingCost, 
         status:'0',
         date: new Date().toISOString().split("T")[0], // تاريخ اليوم
@@ -235,20 +263,36 @@ export default {
       console.log("قبل الإرسال:", newOrder);
 
       await this.addOrder(newOrder);
-      sweetalert("Order Has Been Sent", "we will conect you soon!", "success");
-
+      
       console.log("بعد الإرسال");
-
+      
       this.isLoading = false;
-      this.clearCart()
-      this.$router.push({ name: 'shop'});
+      // توجيه بناءً على طريقة الدفع
+      switch (this.formData.paymentMethod) {
+        case "Cash":
+          sweetalert("Order Has Been Sent", "we will conect you soon!", "success");
+          this.$router.push({ name: 'shop' });
+          this.clearCart()
+          break;
+          case "Wallet":
+          sweetalert("Order Has Been Sent", "go to complete payment by Wallet!", "success");
+          this.$router.push({ name: 'wallet' });
+          break;
+          case "Card":
+          sweetalert("Order Has Been Sent", "go to complete payment by payment!", "success");
+          this.$router.push({ name: 'payment' });
+          break;
+        default:
+          this.$router.push({ name: 'shop' });
+          break;
+      }
       
     } catch (error) {
       console.error("order has not sent  ", error);
       this.isLoading = false;
       this.clearCart()
       this.$router.push({ name: 'shop'});
-      sweetalert("order has not sent", "Try Again", error);
+      sweetalert("خطأ", "حدث خطأ أثناء العملية: " + error.message, "error");
     }
   },
     // ============ creat New oredr => end =======================================
@@ -258,7 +302,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .form-container {
   width: 100%;
   max-width: 600px;
@@ -343,6 +387,75 @@ select:focus {
   background-color: rgba(255, 0, 0, 0.1);  /* خلفية خفيفة باللون الأحمر لتمييز الرسالة */
   padding: 5px;
   border-radius: 4px;
+}
+.payment-methods {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.payment-methods h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: start;
+}
+
+.payment-options {
+  display: flex;
+  gap: 15px;
+}
+
+.payment-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.payment-option input {
+  display: none;
+}
+
+.payment-option .payment-icon {
+  width: 60px;
+  height: 60px;
+  border: 2px solid #d1d5db;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.3s ease;
+  img{
+    width: 70%;
+    height: 70%;
+  }
+  
+}
+
+.payment-option .payment-icon.cash {
+  /* background: url("path-to-cash-icon.svg") no-repeat center center; */
+  background-size: contain;
+}
+
+.payment-option .payment-icon.wallet {
+  /* background: url("path-to-wallet-icon.svg") no-repeat center center; */
+  background-size: contain;
+}
+
+.payment-option .payment-icon.card {
+  // background: url("../../assets/payments/credit-card.png") no-repeat center center;
+  background-size: contain;
+}
+
+.payment-option span {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #374151;
+}
+
+.payment-option input:checked + .payment-icon {
+  border-color: rgb(127, 6, 6);
 }
 /* 
 <!-- <img  :src="require('@/assets/background/bg (3).png')"  alt="home image"  ref="homeImage" class="home__img"> -->

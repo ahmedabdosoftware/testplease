@@ -23,7 +23,14 @@
         <span>home/ {{ categoryName(product) }}</span>
         <p>{{ product.name }}
         </p>
-        <span>${{ product.priceMaterial }}</span>
+        <p v-if="product.offerPrice" class="price">
+            <span class="old-price"> {{ product.priceMaterial }}</span>
+            <span class="offer-price">{{ product.offerPrice }}</span>
+        </p>
+        <p v-else class="price">
+          <span>{{ product.priceMaterial }}</span>
+        </p>
+        <!-- <span>${{ product.priceMaterial }}</span> -->
         <select >
           <option>select size</option>
           <option>small</option>
@@ -279,8 +286,9 @@ div >section:first-child{
         width: 200px;
         height: 43px;
         border-radius: 20px;
-        background-color: orangered;
-        background-color: rgb(127, 6, 6);
+        // background-color: orangered;
+        // background-color: rgb(127, 6, 6);
+        background-color: green;
 
         font-size: 19px;
         color: white;
@@ -357,6 +365,39 @@ div > section:nth-child(2){
 .add-to-cart{
   cursor: pointer;
 }
+.price {
+  display: flex;
+  align-items: center;
+  gap: 10px; 
+}
+
+.old-price {
+  text-decoration: line-through; 
+  color: #b0b0b0; 
+  font-size: 14px; 
+}
+
+
+@keyframes pulsePrise {
+  0% {
+    color: #e63946;
+  }
+  50% {
+    color: #b47b85; 
+  }
+  100% {
+    color: #e63946; 
+  }
+}
+
+.offer-price {
+  color: #e63946 ; 
+  font-size: 16px; 
+  font-weight: bold; 
+  animation: pulsePrise 1.5s infinite; 
+}
+
+
 @media(max-width:460px){
 
   .contner{

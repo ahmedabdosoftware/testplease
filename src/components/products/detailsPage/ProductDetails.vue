@@ -34,7 +34,7 @@
             <option>2</option>
             <option>3</option>
           </select>
-          <button>add to cart</button>
+          <button class="add-to-cart">add to cart</button>
         </div>
         <h2>product details</h2>
         <p> {{ product.description }}!</p>
@@ -161,8 +161,9 @@ section:first-child{
         width: 200px;
         height: 43px;
         border-radius: 20px;
-        background-color: orangered;
-        background-color: rgb(127, 6, 6);
+        // background-color: orangered;
+        // background-color: rgb(127, 6, 6);
+        background-color: green !important;
 
         font-size: 19px;
         color: white;
@@ -170,7 +171,10 @@ section:first-child{
      }
   }
 }
+.add-to-cart{
+  background-color: green !important;
 
+}
 @media(max-width:460px){
 
 .contner{

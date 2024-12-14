@@ -23,7 +23,12 @@
             <div class="item-quantity">
             <p class="item-name">{{ item.quantity }}</p>
             </div>
-            <p class="item-price">{{ item.priceMaterial.toFixed(2) }} €</p>
+            <p v-if="item.offerPrice" class="item-price">
+              {{ item.offerPrice.toFixed(2) }} 
+            </p> 
+            <p v-else class="item-price">
+            {{ item.priceMaterial.toFixed(2) }}
+            </p>
         </div>
       </div>
       <div class="order-totals">
@@ -60,12 +65,12 @@
       ...mapState(useCategoriesStore, ['categories']),
 
       totalPrice() {
-      // حساب المجموع الإجمالي بدون الشحن
-      return this.cartItems.reduce(
-        (sum, item) => sum + item.priceMaterial * item.quantity,
-        0
-      );
-    },
+        return this.cartItems.reduce((sum, item) => {
+          const price = item.offerPrice? item.offerPrice : item.priceMaterial;
+          console.log(price)
+          return sum + price * item.quantity;
+        }, 0);
+      },
       totalPriceWithShipping() {
       // إضافة تكلفة الشحن إلى الإجمالي
       return this.totalPrice + Number(this.shippingCost);

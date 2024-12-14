@@ -86,7 +86,8 @@ export default {
 
 .cta-button {
   padding: 15px 30px;
-  background-color: rgb(127, 6, 6);
+  /* background-color: rgb(127, 6, 6); */
+  background-color: green;
   color: white;
   border: none;
   font-size: 16px;

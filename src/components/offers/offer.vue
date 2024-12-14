@@ -114,7 +114,7 @@ data(){
       width: 160px;
       height: 38px;
       background-color: green;
-      background-color: rgb(127, 6, 6);
+      // background-color: rgb(127, 6, 6);
 
       text-transform: capitalize;
       cursor: pointer;
@@ -149,7 +149,7 @@ data(){
 }
 .mark-name{
     color: rgb(52 178 68);
-    color: rgb(127, 6, 6);
+    // color: rgb(127, 6, 6);
 
     // font-size: 20px;
 }

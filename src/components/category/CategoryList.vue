@@ -54,8 +54,8 @@ export default {
     font-weight: 800;
     font-size: 33px;
     span{
-      // background-color:  hsl(79, 63%, 50%);
-      background-color: rgb(127, 6, 6);
+      background-color:  hsl(79, 63%, 50%);
+      // background-color: rgb(127, 6, 6);
       display: inline-block;
       padding-left: 25px;
       padding-right: 25px;

@@ -22,12 +22,13 @@ export const useOrdersStore = defineStore('orders', {
   },
     async addOrder(order) {
       const orderRef = await db.collection('orders').add(order);
-      await this.fetchOrders();
+      // await this.fetchOrders();
+      localStorage.setItem('lastOrderId', orderRef.id); // store order id "to update order with status of payment"
       return orderRef.id;
     },
     async updateOrder(order) {
       await db.collection('orders').doc(order.id).update(order);
-      await this.fetchOrders();
+      // await this.fetchOrders();
      
     },
     async deleteOrder(orderId) {

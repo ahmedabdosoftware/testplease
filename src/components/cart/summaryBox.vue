@@ -56,12 +56,12 @@
     computed: {
       ...mapState(useCartStore, ['cartItems']),
       totalPrice() {
-      // حساب المجموع الإجمالي بدون الشحن
-      return this.cartItems.reduce(
-        (sum, item) => sum + item.priceMaterial * item.quantity,
-        0
-      );
-    },
+        return this.cartItems.reduce((sum, item) => {
+          const price = item.offerPrice? item.offerPrice : item.priceMaterial;
+          console.log(price)
+          return sum + price * item.quantity;
+        }, 0);
+      },
       totalPriceWithShipping() {
       // إضافة تكلفة الشحن إلى الإجمالي
       return this.totalPrice + Number(this.selectedShipping);

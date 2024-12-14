@@ -21,10 +21,12 @@
       </div>
   
       <!-- Price -->
-      <div class="price">
-         {{ oneProduct.priceMaterial.toFixed(2) }} 
-      </div>
-  
+      <div v-if="oneProduct.offerPrice" class="price">
+         {{ oneProduct.offerPrice.toFixed(2) }} 
+        </div> 
+        <div v-else class="price">
+         {{ oneProduct.priceMaterial.toFixed(2) }}
+        </div>
       <!-- Delete -->
       <div class="delete">
         <button @click="deleteProduct">×</button>
